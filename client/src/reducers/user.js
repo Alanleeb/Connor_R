@@ -21,11 +21,11 @@ export const registerUser = (user, history) => {
       const { data: { data: user }, headers } = res;
       dispatch(setHeaders(headers));
       dispatch(login(user));
-      history.push('/')
+      history.push('/adminDashboard')
     })
     .catch( res => {
       const messages =
-        res.response.data.errors.full_messages.map(message =>
+        res.response.data.errors.messages.map(message =>
           <div>{message}</div>);
         const { headers } = res;
         dispatch(setHeaders(headers));
@@ -65,7 +65,7 @@ export const handleLogin = (user, history) => {
         const { data: { data: user }, headers } = res;
         dispatch(setHeaders(headers));
         dispatch(login(user));
-        history.push('/');
+        history.push('/adminDashboard');
       })
       .catch(res => {
         let errors = res.response.data.errors ? res.response.data.errors : ['Something went wrong']

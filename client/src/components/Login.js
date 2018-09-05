@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { handleLogin } from '../reducers/user';
 
 class Login extends Component {
-  state = { email: '', password: '' };
+  state = { name: '', email: '', password: '' };
 
   handleChange = event => {
     const { id, value } = event.target;
@@ -14,8 +14,8 @@ class Login extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const { dispatch, history } = this.props;
-    const { email, password } = this.state;
-    dispatch(handleLogin({ email, password }, history));
+    const { name, email, password } = this.state;
+    dispatch(handleLogin({ name, email, password }, history));
   }
 
   render() {
