@@ -1,15 +1,20 @@
 class Api::ProductsController < ApplicationController
+  before_action :set_product, only: [:show, :update, :destroy]
   
   def index
-    render :json Product.all
+    render json: Product.all 
+  end
+
+  def show
+    render json: @product
   end
 
   def create
-    render :json Product.new(product_params) 
-    if products.save
-      render json: product 
-    else 
-      render_error(product)
+    product = Product.new(product_params)
+    if product.save
+        render json: product
+    else
+        render json: {errors: contact.errors.full_messages}, status: 422
     end
   end
 
@@ -21,11 +26,23 @@ class Api::ProductsController < ApplicationController
     end
   end
 
+  def update
+    if @product.update(product_params)
+      render json: @product
+    else
+      render json: {errors: @product.errors.full_messages}, status: 422
+    end
+  end
+
   def destroy
     Product.find(params[:id]).destroy
   end
 
   private
+
+  def set_product 
+    @product = Product.find(params[:id])
+  end
 
   def product_params 
     params.require(:product).permit(
@@ -34,16 +51,13 @@ class Api::ProductsController < ApplicationController
       :price,
       :category,
       :distance_preference,
-      :city,
       :state,
-      :zip,
       :country,
+      :international,
       :brand,
       :size,
-      :gender,
-      :photo,
-      :description
       )
   end
 
 end
+
