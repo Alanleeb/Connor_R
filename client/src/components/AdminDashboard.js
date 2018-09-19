@@ -25,7 +25,7 @@ handleChange = (e) => {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { formValues: {    
+    const {    
         product_name, 
         price, 
         distance_preference,
@@ -38,9 +38,9 @@ handleChange = (e) => {
         size,
         gender,
         photo,
-        description }} = this.state
+        description } = this.state;
 
-    const { product, dispatch } = this.props;
+    const { dispatch } = this.props;
     dispatch(updateProduct(user.id, {    
         product_name, 
         price, 
@@ -63,6 +63,27 @@ handleChange = (e) => {
      })
   }
 
+//    handleSubmit = event => {
+//     event.preventDefault();
+//     const { code } = this.state;
+//     const { dispatch } = this.props;
+//     axios.post('/api/user_promo_codes', { code })
+//       .then(res => {
+//         dispatch(setHeaders(res.headers));
+//         alert("Promo code accepted")  
+//         this.props.shareCode(res.data.promo_code)
+//         this.setState({ code: "" });
+//       }).catch( res => {
+//         dispatch(setHeaders(res.response.headers));
+//         const message = res.response.data.errors
+//         if (message) {
+//           return alert(message);
+//         }
+//         else {
+//         return alert("Something went wrong, code not accepted");
+//         }
+//       })
+//   };
 profileView = () => {
     const { user } = this.props;
     return (
