@@ -2,11 +2,28 @@ import React, { Fragment } from 'react';
 import { Form, Grid, Image, Container, Divider, Header, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { setFlash } from '../reducers/flash';
+import { addProduct } from '../reducers/products';
 import user from '../reducers/user';
-import { updateProduct } from '../reducers/product';
 
 class AdminDashboard extends React.Component {
-    state = { products: [], formValues: { name: '', email: '' } }
+    state = { 
+        // products: [], 
+        // formValues: { name: '', email: '' },
+        product_name: "", 
+        price: "", 
+        distance_preference: "",
+        city: "",
+        state: "",
+        zip: "",
+        country: "",
+        international: "",
+        brand: "",
+        size: "",
+        gender: "",
+        photo: "",
+        description: ""
+    }
 
  componentDidMount() {
     const { user: { name, email } } = this.props;
@@ -22,6 +39,11 @@ handleChange = (e) => {
       }
     })
   }
+
+// handleChange = (e) => {
+//     const { name, value } = e.target;
+//     this.setState({ [name]: value });
+//   };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -39,9 +61,22 @@ handleChange = (e) => {
         gender,
         photo,
         description } = this.state;
-
-    const { dispatch } = this.props;
-    dispatch(updateProduct(user.id, {    
+      this.setState({ 
+        product_name: '', 
+        price: '', 
+        distance_preference: '',
+        city: '',
+        state: '',
+        zip: '',
+        country: '',
+        international: '',
+        brand: '',
+        size: '',
+        gender: '',
+        photo: '',
+        description: ''
+       });
+      this.props.dispatch(addProduct({ 
         product_name, 
         price, 
         distance_preference,
@@ -54,36 +89,17 @@ handleChange = (e) => {
         size,
         gender,
         photo,
-        description }))
-    this.setState({ 
-      editing: false,
-      formValues: {
-        ...this.state.formValues
-      }
-     })
-  }
+        description
+      }));
+      this.props.dispatch(setFlash('Product successfully added!', 'green'));
+      this.setState({ 
+        editing: false,
+        formValues: {
+          ...this.state.formValues
+        }
+       })
+    }
 
-//    handleSubmit = event => {
-//     event.preventDefault();
-//     const { code } = this.state;
-//     const { dispatch } = this.props;
-//     axios.post('/api/user_promo_codes', { code })
-//       .then(res => {
-//         dispatch(setHeaders(res.headers));
-//         alert("Promo code accepted")  
-//         this.props.shareCode(res.data.promo_code)
-//         this.setState({ code: "" });
-//       }).catch( res => {
-//         dispatch(setHeaders(res.response.headers));
-//         const message = res.response.data.errors
-//         if (message) {
-//           return alert(message);
-//         }
-//         else {
-//         return alert("Something went wrong, code not accepted");
-//         }
-//       })
-//   };
 profileView = () => {
     const { user } = this.props;
     return (

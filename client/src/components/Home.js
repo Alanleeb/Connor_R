@@ -12,31 +12,32 @@ class Home extends Component {
   state = {products: [], category: "", page: 1, total_pages: 0 };
   
   componentDidMount() {
+    debugger
     axios.get('/api/products')
       .then(res => {
         this.setState({ products: res.data.products, total_pages: res.data.total_pages });
         this.props.dispatch(setHeaders(res.headers))
+        
       });
   };
 
-  displayProducts = () => {
-    const { products } = this.state;
-    let visible = products;
-    return products.map( (product, i) => {
-      return (
-        <Fragment key={i}>
-          <DisplayCard>
+  // displayProducts = () => {
+  //   const { products } = this.state;
+  //   return products.map( (product, i) => {
+  //     return (
+  //       <Fragment key={i}>
+  //         <DisplayCard>
     
-            <CardContent>
-              ${product.product_name}
-              <br/>
-            </CardContent>
-          </DisplayCard>
-          <Divider hidden />
-        </Fragment>
-      )
-    });
-  };
+  //           <CardContent>
+  //             ${product.product_name}
+  //             <br/>
+  //           </CardContent>
+  //         </DisplayCard>
+  //         <Divider hidden />
+  //       </Fragment>
+  //     )
+  //   });
+  // };
 
   render() {
     // const { products } = this.state;
@@ -49,9 +50,9 @@ class Home extends Component {
                 <HeaderText>
                   Products
                 </HeaderText>
-                <CardGroup itemsPerRow={1}>
+                {/* <CardGroup itemsPerRow={1}>
                   {this.displayProducts()}
-                </CardGroup>
+                </CardGroup> */}
             </Grid.Column>
           </Grid.Row>
         </Grid> 
